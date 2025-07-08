@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>G Harmony Music - Orçamento Personalizado</title>
+    <!-- Carrega o Tailwind CSS para estilização moderna e responsiva -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Importa a fonte Playfair Display do Google Fonts para o nome da marca -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <style>
+        /* Define a fonte Inter para todo o corpo do documento, exceto o título principal */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #000000; /* Fundo preto */
+            color: #FFFFFF; /* Cor de texto padrão branca */
+        }
+        /* Estilo para a fonte Playfair Display no nome da marca */
+        .font-playfair {
+            font-family: 'Playfair Display', serif;
+        }
+        /* Estilos personalizados para os botões de seleção (Itens de Interesse, Eventos e Estilos Musicais) */
+        .select-button {
+            /* Ajustado para rounded-2xl para bordas mais arredondadas */
+            @apply px-4 py-2 rounded-2xl border border-gray-700 text-white bg-gray-900 transition-all duration-300 ease-in-out cursor-pointer;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.4); /* Sombra suave para profundidade */
+        }
+        .select-button:hover {
+            /* Ajuste para um hover mais notável */
+            @apply bg-gray-800 border-yellow-500 transform scale-102; /* Borda dourada no hover */
+            box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+        }
+        .select-button.selected {
+            /* Gradiente dourado e escala ao selecionar */
+            @apply bg-gradient-to-r from-yellow-500 to-yellow-700 text-black border-yellow-400 shadow-md transform scale-105;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.6); /* Sombra mais pronunciada */
+        }
+        /* Estilos para o foco dos inputs */
+        input:focus, textarea:focus, select:focus {
+            @apply ring-2 ring-yellow-400 ring-opacity-50 border-transparent;
+        }
+        /* Esconde a caixa de seleção padrão para usar o estilo do botão */
+        input[type="checkbox"] {
+            display: none;
+        }
+        /* Animações sutis para o cabeçalho */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in {
+            animation: fadeIn 1s ease-out forwards;
+        }
+        .animate-fade-in-delay {
+            animation: fadeIn 1.2s ease-out forwards;
+            animation-delay: 0.2s;
+            opacity: 0; /* Garante que comece invisível */
+        }
+        /* Estilo para ícones SVG dentro dos botões de seleção */
+        .select-button svg {
+            fill: currentColor; /* Faz o SVG herdar a cor do texto do botão */
+            width: 40px; /* Tamanho do ícone */
+            height: 40px; /* Tamanho do ícone */
+            margin-bottom: 8px; /* Espaçamento abaixo do ícone */
+        }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen">
+    <div class="flex-grow container mx-auto p-4 md:p-8 max-w-4xl bg-gray-900 shadow-lg rounded-xl my-8">
+        <!-- Cabeçalho do Site -->
+        <header class="text-center mb-8">
+            <!-- Nome da marca com cor dourada vibrante -->
+            <h1 class="text-5xl md:text-6xl font-extrabold text-yellow-300 mb-4 animate-fade-in font-playfair">
+                G Harmony Music
+            </h1>
+            <!-- Subtítulo com fonte menor e texto completo -->
+            <p class="text-xs md:text-sm text-gray-300 animate-fade-in-delay">
+               Criamos momentos inesquecíveis com música ao vivo, levando essa experiência única com performances para casamentos, festas ou eventos. Nossa banda e equipe de som está pronta para transformar o seu dia em algo único e cheio de harmonia.
+            </p>
+        </header>
+
+        <!-- Formulário de Orçamento -->
+        <form id="quoteForm" class="space-y-8">
+            <!-- Seção: Dados do Contratante -->
+            <section class="p-6 bg-gray-800 rounded-lg shadow-inner">
+                <h2 class="text-3xl font-semibold text-yellow-400 mb-6 border-b-2 border-yellow-600 pb-2">
+                    Dados do Contratante
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label for="fullName" class="block text-lg font-medium text-white mb-2">Seu Nome Completo</label>
+                        <input type="text" id="fullName" name="fullName" required
+                               class="w-full p-3 border border-gray-700 rounded-lg bg-gray-950 text-white focus:outline-none focus:border-yellow-500 transition-all duration-200">
+                    </div>
+                    <div>
+                        <label for="whatsapp" class="block text-lg font-medium text-white mb-2">WhatsApp</label>
+                        <input type="tel" id="whatsapp" name="whatsapp" placeholder="(XX) XXXXX-XXXX" required
+                               class="w-full p-3 border border-gray-700 rounded-lg bg-gray-950 text-white focus:outline-none focus:border-yellow-500 transition-all duration-200">
+                    </div>
+                    <div class="md:col-span-2">
+                        <label for="email" class="block text-lg font-medium text-white mb-2">Email</label>
+                        <input type="email" id="email" name="email" placeholder="seu.email@exemplo.com" required
+                               class="w-full p-3 border border-gray-700 rounded-lg bg-gray-950 text-white focus:outline-none focus:border-yellow-500 transition-all duration-200">
+                    </div>
+                </div>
+            </section>
+
+            <!-- Seção: Itens de Interesse (Interativo) -->
+            <section class="p-6 bg-gray-800 rounded-lg shadow-inner">
+                <h2 class="text-3xl font-semibold text-yellow-400 mb-6 border-b-2 border-yellow-600 pb-2">
+                    O que você precisa para o seu evento?
+                </h2>
+                <!-- Adicionado 'justify-center' para centralizar os botões -->
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 justify-center">
+                    <!-- Cada item é um label que contém um checkbox oculto e um botão estilizado com SVG. -->
+                    <label class="flex flex-col items-center select-button" data-item="Caixas de Som">
+                        <input type="checkbox" name="items" value="Caixas de Som">
+                        <!-- Ícone de Caixa de Som -->
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M18 3H6a3 3 0 0 0-3 3v12a3 3 0 0 0 3 3h12a3 3 0 0 0 3-3V6a3 3 0 0 0-3-3ZM6 5h12a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Zm6 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6Zm0 2a1 1 0 1 1 0 2 1 1 0 0 1 0-2Zm0 7a3 3 0 1 0 0 6 3 3 0 0 0 0-6Zm0 2a1 1 0 1 1 0 2 1 1 0 0 1 0-2Z"/></svg>
+                        <span class="text-center font-medium">Caixas de Som</span>
+                    </label>
+                    <label class="flex flex-col items-center select-button" data-item="Microfones">
+                        <input type="checkbox" name="items" value="Microfones">
+                        <!-- Ícone de Microfone -->
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 15a4 4 0 0 0 4-4V5a4 4 0 0 0-8 0v6a4 4 0 0 0 4 4ZM9 5a3 3 0 0 1 6 0v6a3 3 0 0 1-6 0Zm3 10a5 5 0 0 1 5-5v-1a1 1 0 0 1 2 0v1a7 7 0 0 0-7 7v2h2a1 1 0 0 1 0 2h-4a1 1 0 0 1 0-2h2v-2a5 5 0 0 1 5-5Z"/></svg>
+                        <span class="text-center font-medium">Microfones</span>
+                    </label>
+                    <label class="flex flex-col items-center select-button" data-item="Sistema Completo com Subwoofer">
+                        <input type="checkbox" name="items" value="Sistema Completo com Subwoofer">
+                        <!-- Ícone de Sistema de Som (Mixer de Áudio) -->
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2Zm0 18a8 8 0 1 1 8-8A8 8 0 0 1 12 20Zm-1-8a1 1 0 0 1 2 0v4a1 1 0 0 1-2 0Zm-3-2a1 1 0 0 1 2 0v6a1 1 0 0 1-2 0Zm6-2a1 1 0 0 1 2 0v6a1 1 0 0 1-2 0Z"/></svg>
+                        <span class="text-center font-medium">Sistema Completo com Subwoofer</span>
+                    </label>
+                    <label class="flex flex-col items-center select-button" data-item="Pista de Dança">
+                        <input type="checkbox" name="items" value="Pista de Dança">
+                        <!-- Ícone de Pista de Dança (Quadriculada) -->
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M3 3h18v18H3V3zm2 2v6h6V5H5zm8 0v6h6V5h-6zm-8 8v6h6v-6H5zm8 0v6h6v-6h-6z"/>
+                        </svg>
+                        <span class="text-center font-medium">Pista de Dança</span>
+                    </label>
+                    <label class="flex flex-col items-center select-button" data-item="Banda e Cantores" id="bandSingersCheckbox">
+                        <input type="checkbox" name="items" value="Banda e Cantores">
+                        <!-- Ícone de Banda (Grupo Musical) -->
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2Zm0 18a8 8 0 1 1 8-8A8 8 0 0 1 12 20Zm-4-6a1 1 0 0 1 2 0v2a1 1 0 0 1-2 0Zm4-4a1 1 0 0 1 2 0v6a1 1 0 0 1-2 0Zm4-2a1 1 0 0 1 2 0v8a1 1 0 0 1-2 0Z"/></svg>
+                        <span class="text-center font-medium">Banda e Cantores</span>
+                    </label>
+                </div>
+            </section>
+
+            <!-- Seção: Instrumentos (aparece se Banda e Cantores for selecionado) -->
+            <section id="bandInstrumentsSection" class="p-6 bg-gray-800 rounded-lg shadow-inner hidden">
+                <h2 class="text-3xl font-semibold text-yellow-400 mb-6 border-b-2 border-yellow-600 pb-2">
+                    Instrumentos e Formação
+                </h2>
+                <!-- Adicionado 'justify-center' para centralizar os botões -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 justify-center">
+                    <label class="flex flex-col items-center select-button" data-item="Violão">
+                        <input type="checkbox" name="bandInstruments" value="Violão">
+                        <!-- Ícone de Violão (Guitarra Acústica) -->
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2ZM12 4C16.4183 4 20 7.58172 20 12C20 16.4183 16.4183 20 12 20C7.58172 20 4 16.4183 4 12C4 7.58172 7.58172 4 12 4ZM12 6C11.4477 6 11 6.44772 11 7V17C11 17.5523 11.4477 18 12 18C12.5523 18 13 17.5523 13 17V7C13 6.44772 12.5523 6 12 6Z"/>
+                        </svg>
+                        Violão
+                    </label>
+                    <label class="flex flex-col items-center select-button" data-item="Baixo">
+                        <input type="checkbox" name="bandInstruments" value="Baixo">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2Zm0 18a8 8 0 1 1 8-8A8 8 0 0 1 12 20Zm-1-7a1 1 0 0 1 2 0v2a1 1 0 0 1-2 0Zm-3-2a1 1 0 0 1 2 0v4a1 1 0 0 1-2 0Zm6-2a1 1 0 0 1 2 0v4a1 1 0 0 1-2 0Z"/></svg>
+                        Baixo
+                    </label>
+                    <label class="flex flex-col items-center select-button" data-item="Teclado">
+                        <input type="checkbox" name="bandInstruments" value="Teclado">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2Zm0 18a8 8 0 1 1 8-8A8 8 0 0 1 12 20Zm-1-7a1 1 0 0 1 2 0v2a1 1 0 0 1-2 0Zm-3-2a1 1 0 0 1 2 0v4a1 1 0 0 1-2 0Zm6-2a1 1 0 0 1 2 0v4a1 1 0 0 1-2 0Z"/></svg>
+                        Teclado
+                    </label>
+                    <label class="flex flex-col items-center select-button" data-item="Guitarra">
+                        <input type="checkbox" name="bandInstruments" value="Guitarra">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2Zm0 18a8 8 0 1 1 8-8A8 8 0 0 1 12 20Zm-1-7a1 1 0 0 1 2 0v2a1 1 0 0 1-2 0Zm-3-2a1 1 0 0 1 2 0v4a1 1 0 0 1-2 0Zm6-2a1 1 0 0 1 2 0v4a1 1 0 0 1-2 0Z"/></svg>
+                        Guitarra
+                    </label>
+                    <label class="flex flex-col items-center select-button" data-item="Saxofone">
+                        <input type="checkbox" name="bandInstruments" value="Saxofone">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2Zm0 18a8 8 0 1 1 8-8A8 8 0 0 1 12 20Zm-1-7a1 1 0 0 1 2 0v2a1 1 0 0 1-2 0Zm-3-2a1 1 0 0 1 2 0v4a1 1 0 0 1-2 0Zm6-2a1 1 0 0 1 2 0v4a1 1 0 0 1-2 0Z"/></svg>
+                        Saxofone
+                    </label>
+                    <label class="flex flex-col items-center select-button" data-item="Violino">
+                        <input type="checkbox" name="bandInstruments" value="Violino">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2Zm0 18a8 8 0 1 1 8-8A8 8 0 0 1 12 20Zm-1-7a1 1 0 0 1 2 0v2a1 1 0 0 1-2 0Zm-3-2a1 1 0 0 1 2 0v4a1 1 0 0 1-2 0Zm6-2a1 1 0 0 1 2 0v4a1 1 0 0 1-2 0Z"/></svg>
+                        Violino
+                    </label>
+                    <label class="flex flex-col items-center select-button" data-item="Cantores">
+                        <input type="checkbox" name="bandInstruments" value="Cantores">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2Zm0 18a8 8 0 1 1 8-8A8 8 0 0 1 12 20Zm-1-7a1 1 0 0 1 2 0v2a1 1 0 0 1-2 0Zm-3-2a1 1 0 0 1 2 0v4a1 1 0 0 1-2 0Zm6-2a1 1 0 0 1 2 0v4a1 1 0 0 1-2 0Z"/></svg>
+                        Cantores
+                    </label>
+                    <label class="flex flex-col items-center select-button" data-item="Coral">
+                        <input type="checkbox" name="bandInstruments" value="Coral">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2Zm0 18a8 8 0 1 1 8-8A8 8 0 0 1 12 20Zm-1-7a1 1 0 0 1 2 0v2a1 1 0 0 1-2 0Zm-3-2a1 1 0 0 1 2 0v4a1 1 0 0 1-2 0Zm6-2a1 1 0 0 1 2 0v4a1 1 0 0 1-2 0Z"/></svg>
+                        Coral
+                    </label>
+                    <label class="flex flex-col items-center select-button" data-item="Bateria">
+                        <input type="checkbox" name="bandInstruments" value="Bateria">
+                        <!-- Ícone de Bateria -->
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2Zm0 18a8 8 0 1 1 8-8A8 8 0 0 1 12 20Zm-3-6a1 1 0 0 1 2 0v2a1 1 0 0 1-2 0Zm6-2a1 1 0 0 1 2 0v4a1 1 0 0 1-2 0Zm-3-4a1 1 0 0 1 2 0v6a1 1 0 0 1-2 0Z"/>
+                        </svg>
+                        Bateria
+                    </label>
+                </div>
+            </section>
+
+            <!-- Seção: Dados do Evento -->
+            <section class="p-6 bg-gray-800 rounded-lg shadow-inner">
+                <h2 class="text-3xl font-semibold text-yellow-400 mb-6 border-b-2 border-yellow-600 pb-2">
+                    Dados do Evento
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label for="eventType" class="block text-lg font-medium text-white mb-2">Tipo de Evento</label>
+                        <select id="eventType" name="eventType" required
+                                class="w-full p-3 border border-gray-700 rounded-lg bg-gray-950 text-white focus:outline-none focus:border-yellow-500 transition-all duration-200">
+                            <option value="">Selecione o tipo de evento</option>
+                            <option value="Casamento">Casamento</option>
+                            <option value="Formatura">Formatura</option>
+                            <option value="Aniversário">Aniversário</option>
+                            <option value="Culto">Culto</option>
+                            <option value="Show">Show</option>
+                            <option value="Palestra">Palestra</option>
+                            <option value="Evento ao ar livre">Evento ao ar livre</option>
+                            <option value="Eventos corporativos">Eventos corporativos</option>
+                            <option value="Teatro">Teatro</option>
+                            <option value="Outros">Outros</option>
+                        </select>
+                    </div>
+                    <div id="otherEventTypeContainer" class="hidden">
+                        <label for="otherEventType" class="block text-lg font-medium text-white mb-2">Qual outro tipo de evento?</label>
+                        <input type="text" id="otherEventType" name="otherEventType"
+                               class="w-full p-3 border border-gray-700 rounded-lg bg-gray-950 text-white focus:outline-none focus:border-yellow-500 transition-all duration-200"
+                               placeholder="Ex: Festival de música">
+                    </div>
+                    <div>
+                        <label for="eventDate" class="block text-lg font-medium text-white mb-2">Data do Evento</label>
+                        <input type="date" id="eventDate" name="eventDate" required
+                               class="w-full p-3 border border-gray-700 rounded-lg bg-gray-950 text-white focus:outline-none focus:border-yellow-500 transition-all duration-200">
+                    </div>
+                    <div>
+                        <label for="startTime" class="block text-lg font-medium text-white mb-2">Horário de Início</label>
+                        <input type="time" id="startTime" name="startTime" required
+                               class="w-full p-3 border border-gray-700 rounded-lg bg-gray-950 text-white focus:outline-none focus:border-yellow-500 transition-all duration-200">
+                    </div>
+                    <div>
+                        <label for="duration" class="block text-lg font-medium text-white mb-2">Duração (horas)</label>
+                        <input type="number" id="duration" name="duration" min="1" step="0.5" required
+                               class="w-full p-3 border border-gray-700 rounded-lg bg-gray-950 text-white focus:outline-none focus:border-yellow-500 transition-all duration-200">
+                    </div>
+                    <div class="md:col-span-2">
+                        <label for="spaceName" class="block text-lg font-medium text-white mb-2">Nome do Espaço</label>
+                        <input type="text" id="spaceName" name="spaceName" required
+                               class="w-full p-3 border border-gray-700 rounded-lg bg-gray-950 text-white focus:outline-none focus:border-yellow-500 transition-all duration-200"
+                               placeholder="Ex: Salão de Festas Harmonia">
+                    </div>
+                    <!-- Campos de endereço dinâmicos -->
+                    <div id="streetNameContainer" class="md:col-span-2">
+                        <label for="streetName" class="block text-lg font-medium text-white mb-2">Rua</label>
+                        <input type="text" id="streetName" name="streetName" required
+                               class="w-full p-3 border border-gray-700 rounded-lg bg-gray-950 text-white focus:outline-none focus:border-yellow-500 transition-all duration-200"
+                               placeholder="Ex: Rua da Música">
+                    </div>
+                    <div id="houseNumberContainer" class="hidden md:col-span-2">
+                        <label for="houseNumber" class="block text-lg font-medium text-white mb-2">Número</label>
+                        <input type="text" id="houseNumber" name="houseNumber"
+                               class="w-full p-3 border border-gray-700 rounded-lg bg-gray-950 text-white focus:outline-none focus:border-yellow-500 transition-all duration-200"
+                               placeholder="Ex: 123">
+                    </div>
+                    <div id="neighborhoodContainer" class="hidden md:col-span-2">
+                        <label for="neighborhood" class="block text-lg font-medium text-white mb-2">Bairro</label>
+                        <input type="text" id="neighborhood" name="neighborhood"
+                               class="w-full p-3 border border-gray-700 rounded-lg bg-gray-950 text-white focus:outline-none focus:border-yellow-500 transition-all duration-200"
+                               placeholder="Ex: Bairro do Som">
+                    </div>
+                    <div id="cityContainer" class="hidden md:col-span-2">
+                        <label for="city" class="block text-lg font-medium text-white mb-2">Cidade</label>
+                        <input type="text" id="city" name="city"
+                               class="w-full p-3 border border-gray-700 rounded-lg bg-gray-950 text-white focus:outline-none focus:border-yellow-500 transition-all duration-200"
+                               placeholder="Ex: Harmonia City">
+                    </div>
+                    <div id="stateContainer" class="hidden md:col-span-2">
+                        <label for="state" class="block text-lg font-medium text-white mb-2">Estado</label>
+                        <input type="text" id="state" name="state"
+                               class="w-full p-3 border border-gray-700 rounded-lg bg-gray-950 text-white focus:outline-none focus:border-yellow-500 transition-all duration-200"
+                               placeholder="Ex: SP">
+                    </div>
+                    <div id="zipCodeContainer" class="hidden md:col-span-2">
+                        <label for="zipCode" class="block text-lg font-medium text-white mb-2">CEP</label>
+                        <input type="text" id="zipCode" name="zipCode"
+                               class="w-full p-3 border border-gray-700 rounded-lg bg-gray-950 text-white focus:outline-none focus:border-yellow-500 transition-all duration-200"
+                               placeholder="Ex: 00000-000">
+                    </div>
+                    <div class="md:col-span-2">
+                        <label for="numGuests" class="block text-lg font-medium text-white mb-2">Número de Convidados</label>
+                        <input type="number" id="numGuests" name="numGuests" min="1" required
+                               class="w-full p-3 border border-gray-700 rounded-lg bg-gray-950 text-white focus:outline-none focus:border-yellow-500 transition-all duration-200">
+                    </div>
+                    <div class="md:col-span-2">
+                        <label for="musicStyles" class="block text-lg font-medium text-white mb-2">Estilos Musicais Preferidos</label>
+                        <div class="grid grid-cols-2 md:grid-cols-3 gap-2">
+                            <!-- Checkboxes para Estilos Musicais -->
+                            <label class="flex items-center select-button" data-item="MPB">
+                                <input type="checkbox" name="musicStyles" value="MPB">
+                                MPB
+                            </label>
+                            <label class="flex items-center select-button" data-item="Sertanejo">
+                                <input type="checkbox" name="musicStyles" value="Sertanejo">
+                                Sertanejo
+                            </label>
+                            <label class="flex items-center select-button" data-item="Rock">
+                                <input type="checkbox" name="musicStyles" value="Rock">
+                                Rock
+                            </label>
+                            <label class="flex items-center select-button" data-item="Pop">
+                                <input type="checkbox" name="musicStyles" value="Pop">
+                                Pop
+                            </label>
+                            <label class="flex items-center select-button" data-item="Jazz">
+                                <input type="checkbox" name="musicStyles" value="Jazz">
+                                Jazz
+                            </label>
+                            <label class="flex items-center select-button" data-item="Bossa Nova">
+                                <input type="checkbox" name="musicStyles" value="Bossa Nova">
+                                Bossa Nova
+                            </label>
+                            <label class="flex items-center select-button" data-item="Gospel">
+                                <input type="checkbox" name="musicStyles" value="Gospel">
+                                Gospel
+                            </label>
+                            <label class="flex items-center select-button" data-item="Funk">
+                                <input type="checkbox" name="musicStyles" value="Funk">
+                                Funk
+                            </label>
+                            <label class="flex items-center select-button" data-item="Samba">
+                                <input type="checkbox" name="musicStyles" value="Samba">
+                                Samba
+                            </label>
+                            <label class="flex items-center select-button" data-item="Forró">
+                                <input type="checkbox" name="musicStyles" value="Forró">
+                                Forró
+                            </label>
+                            <label class="flex items-center select-button" data-item="Eletrônica">
+                                <input type="checkbox" name="musicStyles" value="Eletrônica">
+                                Eletrônica
+                            </label>
+                            <label class="flex items-center select-button" data-item="Reggae">
+                                <input type="checkbox" name="musicStyles" value="Reggae">
+                                Reggae
+                            </label>
+                            <label class="flex items-center select-button" data-item="Blues">
+                                <input type="checkbox" name="musicStyles" value="Blues">
+                                Blues
+                            </label>
+                            <label class="flex items-center select-button" data-item="Clássica">
+                                <input type="checkbox" name="musicStyles" value="Clássica">
+                                Clássica
+                            </label>
+                            <label class="flex items-center select-button" data-item="Axé">
+                                <input type="checkbox" name="musicStyles" value="Axé">
+                                Axé
+                            </label>
+                            <label class="flex items-center select-button" data-item="Pagode">
+                                <input type="checkbox" name="musicStyles" value="Pagode">
+                                Pagode
+                            </label>
+                            <label class="flex items-col items-center select-button" data-item="Hip Hop">
+                                <input type="checkbox" name="musicStyles" value="Hip Hop">
+                                Hip Hop
+                            </label>
+                            <label class="flex items-center select-button" data-item="Country">
+                                <input type="checkbox" name="musicStyles" value="Country">
+                                Country
+                            </label>
+                            <label class="flex items-center select-button" data-item="Folk">
+                                <input type="checkbox" name="musicStyles" value="Folk">
+                                Folk
+                            </label>
+                            <label class="flex items-center select-button" data-item="R&B">
+                                <input type="checkbox" name="musicStyles" value="R&B">
+                                R&B
+                            </label>
+                            <label class="flex items-center select-button" data-item="K-Pop">
+                                <input type="checkbox" name="musicStyles" value="K-Pop">
+                                K-Pop
+                            </label>
+                            <label class="flex items-center select-button" data-item="Outros" id="otherMusicStyleCheckbox">
+                                <input type="checkbox" name="musicStyles" value="Outros">
+                                Outros
+                            </label>
+                        </div>
+                    </div>
+                    <div id="otherMusicStyleContainer" class="hidden md:col-span-2">
+                        <label for="otherMusicStyle" class="block text-lg font-medium text-white mb-2">Qual outro estilo musical?</label>
+                        <input type="text" id="otherMusicStyle" name="otherMusicStyle"
+                               class="w-full p-3 border border-gray-700 rounded-lg bg-gray-950 text-white focus:outline-none focus:border-yellow-500 transition-all duration-200"
+                               placeholder="Ex: Heavy Metal, Soul">
+                    </div>
+                </div>
+            </section>
+
+            <!-- Seção: Conte-nos mais sobre seu evento -->
+            <section class="p-6 bg-gray-800 rounded-lg shadow-inner">
+                <h2 class="text-3xl font-semibold text-yellow-400 mb-6 border-b-2 border-yellow-600 pb-2">
+                    Conte-nos mais sobre seu evento
+                </h2>
+                <div>
+                    <label for="observations" class="block text-lg font-medium text-white mb-2">
+                        Por favor, descreva seu evento em detalhes, incluindo o estilo do casamento, preferências especiais ou necessidades específicas.
+                    </label>
+                    <textarea id="observations" name="observations" rows="5"
+                              class="w-full p-3 border border-gray-700 rounded-lg bg-gray-950 text-white focus:outline-none focus:border-yellow-500 transition-all duration-200"
+                              placeholder="Ex: Estilo do casamento, preferências especiais ou necessidades específicas."></textarea>
+                </div>
+            </section>
+
+            <!-- Botão de Envio -->
+            <div class="text-center pt-4">
+                <button type="submit"
+                        class="bg-gradient-to-r from-yellow-500 to-yellow-700 text-black text-2xl font-bold py-4 px-8 rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 ease-in-out focus:outline-none focus:ring-4 focus:ring-yellow-300">
+                    Solicitar Orçamento Personalizado ✨
+                </button>
+            </div>
+
+            <!-- Mensagem de Sucesso (oculta por padrão) -->
+            <div id="successMessage" class="hidden mt-6 p-4 bg-green-700 text-green-100 rounded-lg text-center text-lg">
+                🎉 Sua solicitação foi enviada! A G Harmony Music entrará em contato em breve.
+            </div>
+        </form>
+    </div>
+
+    <!-- Rodapé do Site -->
+    <footer class="bg-gray-950 text-white py-6 text-center mt-8 rounded-t-xl">
+        <div class="container mx-auto">
+            <p class="text-xl mb-2">📞 Contato Direto</p>
+            <p class="text-2xl font-bold mb-4">
+                WhatsApp: <a href="https://wa.me/5511971999790" target="_blank" class="text-yellow-400 hover:text-yellow-300 transition-colors duration-200">(11) 97199-9790</a>
+            </p>
+            <p class="text-sm text-gray-400">&copy; 2024 G Harmony Music. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Adiciona funcionalidade para os botões de seleção (checkboxes estilizados)
+        document.querySelectorAll('.select-button').forEach(button => {
+            const checkbox = button.querySelector('input[type="checkbox"]');
+            button.addEventListener('click', (e) => {
+                // Alterna o estado do checkbox e a classe 'selected'
+                checkbox.checked = !checkbox.checked;
+                button.classList.toggle('selected', checkbox.checked);
+            });
+
+            // Garante que o estado inicial do botão reflita o checkbox (útil se houver preenchimento prévio)
+            if (checkbox.checked) {
+                button.classList.add('selected');
+            }
+        });
+
+        // Lógica para mostrar/esconder o campo "Outro tipo de evento"
+        const eventTypeSelect = document.getElementById('eventType');
+        const otherEventTypeContainer = document.getElementById('otherEventTypeContainer');
+        const otherEventTypeInput = document.getElementById('otherEventType');
+
+        eventTypeSelect.addEventListener('change', function() {
+            if (this.value === 'Outros') {
+                otherEventTypeContainer.classList.remove('hidden');
+                otherEventTypeInput.setAttribute('required', 'true'); // Torna o campo obrigatório
+            } else {
+                otherEventTypeContainer.classList.add('hidden');
+                otherEventTypeInput.removeAttribute('required'); // Remove a obrigatoriedade
+                otherEventTypeInput.value = ''; // Limpa o campo
+            }
+        });
+
+        // Lógica para mostrar/esconder a seção de Instrumentos da Banda
+        const bandSingersCheckboxLabel = document.getElementById('bandSingersCheckbox');
+        const bandSingersCheckbox = bandSingersCheckboxLabel.querySelector('input[type="checkbox"]');
+        const bandInstrumentsSection = document.getElementById('bandInstrumentsSection');
+
+        bandSingersCheckbox.addEventListener('change', function() {
+            if (this.checked) {
+                bandInstrumentsSection.classList.remove('hidden');
+            } else {
+                bandInstrumentsSection.classList.add('hidden');
+                // Desmarca todos os instrumentos quando a opção "Banda e Cantores" é desmarcada
+                document.querySelectorAll('input[name="bandInstruments"]:checked').forEach(cb => {
+                    cb.checked = false;
+                    cb.closest('.select-button').classList.remove('selected');
+                });
+            }
+        });
+
+        // Lógica para mostrar/esconder o campo "Outro estilo musical"
+        const otherMusicStyleCheckboxLabel = document.getElementById('otherMusicStyleCheckbox');
+        const otherMusicStyleCheckbox = otherMusicStyleCheckboxLabel.querySelector('input[type="checkbox"]');
+        const otherMusicStyleContainer = document.getElementById('otherMusicStyleContainer');
+        const otherMusicStyleInput = document.getElementById('otherMusicStyle');
+
+        otherMusicStyleCheckbox.addEventListener('change', function() {
+            if (this.checked) {
+                otherMusicStyleContainer.classList.remove('hidden');
+                otherMusicStyleInput.setAttribute('required', 'true');
+            } else {
+                otherMusicStyleContainer.classList.add('hidden');
+                otherMusicStyleInput.removeAttribute('required');
+                otherMusicStyleInput.value = '';
+            }
+        });
+
+        // Lógica para mostrar campos de endereço sequencialmente
+        const addressFields = [
+            { id: 'streetName', container: 'streetNameContainer', nextContainer: 'houseNumberContainer' },
+            { id: 'houseNumber', container: 'houseNumberContainer', nextContainer: 'neighborhoodContainer' },
+            { id: 'neighborhood', container: 'neighborhoodContainer', nextContainer: 'cityContainer' },
+            { id: 'city', container: 'cityContainer', nextContainer: 'stateContainer' },
+            { id: 'state', container: 'stateContainer', nextContainer: 'zipCodeContainer' },
+            { id: 'zipCode', container: 'zipCodeContainer', nextContainer: null }
+        ];
+
+        // Inicialmente esconde todos os campos de endereço, exceto o primeiro (Rua)
+        addressFields.forEach((field, index) => {
+            if (index > 0) { // Esconde todos menos o primeiro
+                document.getElementById(field.container).classList.add('hidden');
+            }
+            const inputElement = document.getElementById(field.id);
+            if (inputElement) {
+                inputElement.addEventListener('input', () => {
+                    if (inputElement.value.trim() !== '') {
+                        // Se o campo atual for preenchido, mostra o próximo
+                        if (field.nextContainer) {
+                            document.getElementById(field.nextContainer).classList.remove('hidden');
+                        }
+                    } else {
+                        // Se o campo atual for esvaziado, esconde os campos seguintes
+                        let foundCurrent = false;
+                        addressFields.forEach(f => {
+                            if (f.id === field.id) {
+                                foundCurrent = true;
+                            } else if (foundCurrent) {
+                                document.getElementById(f.container).classList.add('hidden');
+                                const subInput = document.getElementById(f.id);
+                                if (subInput) subInput.value = ''; // Limpa o valor dos campos escondidos
+                            }
+                        });
+                    }
+                });
+            }
+        });
+
+
+        // Lida com o envio do formulário
+        document.getElementById('quoteForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Impede o envio padrão do formulário
+
+            // Coleta os dados do formulário
+            const fullName = document.getElementById('fullName').value;
+            const whatsapp = document.getElementById('whatsapp').value;
+            const email = document.getElementById('email').value;
+            const eventDate = document.getElementById('eventDate').value;
+            const startTime = document.getElementById('startTime').value;
+            const duration = document.getElementById('duration').value;
+            const spaceName = document.getElementById('spaceName').value;
+            // Novos campos de endereço
+            const streetName = document.getElementById('streetName').value;
+            const houseNumber = document.getElementById('houseNumber').value;
+            const neighborhood = document.getElementById('neighborhood').value;
+            const city = document.getElementById('city').value;
+            const state = document.getElementById('state').value;
+            const zipCode = document.getElementById('zipCode').value;
+
+            const numGuests = document.getElementById('numGuests').value;
+            const observations = document.getElementById('observations').value;
+
+            // Coleta os itens de interesse selecionados
+            const selectedItems = Array.from(document.querySelectorAll('input[name="items"]:checked'))
+                                       .map(cb => cb.value)
+                                       .join(', ') || 'Nenhum item selecionado';
+
+            // Coleta o tipo de evento selecionado (do select)
+            let selectedEventType = eventTypeSelect.value;
+            if (selectedEventType === 'Outros') {
+                selectedEventType = otherEventTypeInput.value.trim() || 'Outro (não especificado)';
+            } else if (selectedEventType === '') {
+                selectedEventType = 'Não especificado';
+            }
+
+            // Coleta os estilos musicais selecionados
+            let selectedMusicStyles = Array.from(document.querySelectorAll('input[name="musicStyles"]:checked'))
+                                           .map(cb => cb.value);
+
+            // Se "Outros" estiver selecionado nos estilos musicais, adiciona o valor do campo de texto
+            if (selectedMusicStyles.includes('Outros') && otherMusicStyleInput.value.trim() !== '') {
+                selectedMusicStyles = selectedMusicStyles.filter(style => style !== 'Outros'); // Remove "Outros" da lista
+                selectedMusicStyles.push(otherMusicStyleInput.value.trim()); // Adiciona o valor digitado
+            }
+            selectedMusicStyles = selectedMusicStyles.length > 0 ? selectedMusicStyles.join(', ') : 'Nenhum estilo musical selecionado';
+
+
+            // Coleta os instrumentos selecionados, se a seção estiver visível
+            let selectedInstruments = 'Não aplicável';
+            if (!bandInstrumentsSection.classList.contains('hidden')) {
+                const instruments = Array.from(document.querySelectorAll('input[name="bandInstruments"]:checked'))
+                                           .map(cb => cb.value);
+                selectedInstruments = instruments.length > 0 ? instruments.join(', ') : 'Nenhum instrumento selecionado';
+            }
+
+
+            // Formata os dados para o corpo do e-mail
+            const emailBody = `
+Olá G Harmony Music,
+
+Gostaria de solicitar um orçamento personalizado para o meu evento.
+
+--- Dados do Contratante ---
+Nome Completo: ${fullName}
+WhatsApp: ${whatsapp}
+Email: ${email}
+
+--- Itens de Interesse ---
+${selectedItems}
+${bandSingersCheckbox.checked ? `Instrumentos/Formação da Banda: ${selectedInstruments}` : ''}
+
+--- Dados do Evento ---
+Tipo de Evento: ${selectedEventType}
+Data do Evento: ${eventDate}
+Horário de Início: ${startTime}
+Duração: ${duration} horas
+Nome do Espaço: ${spaceName}
+Endereço: ${streetName}, ${houseNumber}, ${neighborhood}, ${city}, ${state}, CEP: ${zipCode}
+Número de Convidados: ${numGuests}
+Estilos Musicais Preferidos: ${selectedMusicStyles}
+
+--- Conte-nos mais sobre seu evento ---
+${observations || 'Nenhuma observação adicional.'}
+
+Aguardo seu contato!
+`;
+
+            // Codifica o corpo do e-mail para ser usado na URL mailto
+            const encodedBody = encodeURIComponent(emailBody);
+            const subject = encodeURIComponent('Solicitação de Orçamento - G Harmony Music');
+            const mailtoLink = `mailto:gharmonymusic@hotmail.com?subject=${subject}&body=${encodedBody}`;
+
+            // Abre o cliente de e-mail padrão do usuário
+            window.location.href = mailtoLink;
+
+            // Exibe a mensagem de sucesso
+            const successMessage = document.getElementById('successMessage');
+            successMessage.classList.remove('hidden');
+            // Opcional: Esconde a mensagem após alguns segundos
+            setTimeout(() => {
+                successMessage.classList.add('hidden');
+            }, 8000); // Esconde após 8 segundos
+
+            // Opcional: Limpa o formulário após o envio
+            this.reset();
+            // Remove a classe 'selected' de todos os botões após resetar
+            document.querySelectorAll('.select-button.selected').forEach(button => {
+                button.classList.remove('selected');
+            });
+            // Esconde a seção de instrumentos e os campos "Outros"
+            bandInstrumentsSection.classList.add('hidden');
+            otherEventTypeContainer.classList.add('hidden');
+            otherEventTypeInput.removeAttribute('required');
+            otherMusicStyleContainer.classList.add('hidden'); // Esconde o campo "Outros" para estilos musicais
+            otherMusicStyleInput.removeAttribute('required');
+
+            // Esconde todos os campos de endereço novamente, exceto o primeiro
+            addressFields.forEach((field, index) => {
+                if (index > 0) {
+                    document.getElementById(field.container).classList.add('hidden');
+                    const inputElement = document.getElementById(field.id);
+                    if (inputElement) inputElement.value = '';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
